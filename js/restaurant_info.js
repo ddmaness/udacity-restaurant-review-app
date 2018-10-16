@@ -22,7 +22,7 @@ initMap = () => {
         scrollWheelZoom: false
       });
       L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
-        mapboxToken: '<your MAPBOX API KEY HERE>',
+        mapboxToken: 'pk.eyJ1IjoiZG1hbmVzczM0MjciLCJhIjoiY2puODBpaGI4Nml2YjN4cWN1czY4d2xkNCJ9.7I2TmkUrXdnRW8r-9zQ1qw',
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
           '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
@@ -149,18 +149,25 @@ fillReviewsHTML = (reviews = self.restaurant.reviews) => {
 createReviewHTML = (review) => {
   const li = document.createElement('li');
   const name = document.createElement('p');
+  name.className = 'name';
   name.innerHTML = review.name;
-  li.appendChild(name);
 
   const date = document.createElement('p');
+  date.className = 'date';
   date.innerHTML = review.date;
-  li.appendChild(date);
+
+  const header = document.createElement('div');
+  header.appendChild(name);
+  header.appendChild(date);
+  li.appendChild(header);
 
   const rating = document.createElement('p');
+  rating.className = 'rating';
   rating.innerHTML = `Rating: ${review.rating}`;
   li.appendChild(rating);
 
   const comments = document.createElement('p');
+  comments.className = 'comments'
   comments.innerHTML = review.comments;
   li.appendChild(comments);
 
