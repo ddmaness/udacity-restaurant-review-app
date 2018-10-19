@@ -7,6 +7,7 @@ self.addEventListener('install', function(event) {
         caches.open(staticCacheName).then(function(cache){
             return cache.addAll([
                 '/',
+                '/restaurant.html',
                 'css/styles.css',
                 'js/dbhelper.js',
                 'js/main.js',
@@ -37,7 +38,7 @@ self.addEventListener('activate', function(event){
 // intercept requests and respond from cache if possible
 self.addEventListener('fetch', function(event){
     event.respondWith(
-        caches.match(event.request).then(function(response){
+        caches.match(event.request, {ignoreSearch: true}).then(function(response){
             if (response) {
                 return response;
             }
