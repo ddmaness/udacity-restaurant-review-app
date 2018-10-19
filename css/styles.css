@@ -422,5 +422,45 @@ nav h1 a {
 
   #reviews-container {
     padding: 30px 20px 80px;
+  }
 }
+
+/* ====================== Update Prompt ====================== */
+#prompt {
+  position: fixed;
+  width: 300px;
+  background-color: #333;
+  top: 86vh;
+  left: 10vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+#prompt p {
+  text-align: center;
+  flex-basis: 100%;
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+#prompt button {
+  height: 40px;
+  padding: 4px;
+  margin: 0 8px 8px;
+  border: none;
+  background-color: #f18200;
+  color: white;
+}
+
+#prompt button:hover {
+  cursor: pointer;
+  background-color: #ad5c00
+}
+
+#prompt button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px #fff;
 }

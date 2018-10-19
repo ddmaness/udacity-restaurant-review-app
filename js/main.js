@@ -5,10 +5,65 @@ var newMap
 var markers = []
 
 /**
+ * Register service worker
+ ***/
+if (navigator.serviceWorker){
+  navigator.serviceWorker.register('sw.js').then(function(reg){
+    // Check to see if browser supports service workers
+    if (!navigator.serviceWorker.controller) {
+      return;
+    }
+
+    // Display prompt if service worker is waiting to be installed
+    if (reg.waiting) {
+      updatePrompt.updateReady(reg.waiting);
+    }
+  });
+
+  let refreshing;
+  navigator.serviceWorker.addEventListener('controllerchange', function() {
+    if (refreshing) return;
+    window.location.reload();
+    refreshing = true;
+  });
+}
+
+/**
+ * Prompt users with new version of site available
+ */
+const updatePrompt = {
+  updateReady: function(worker) {
+    const prompt = document.createElement('div');
+    prompt.id = 'prompt';
+    const message = document.createElement('p');
+    message.textContent = 'Update ready';
+    prompt.appendChild(message);
+    const updateBtn = document.createElement('button');
+    updateBtn.textContent = 'Refresh';
+
+    // Send message to service worker if user chooses to update
+    updateBtn.addEventListener('click', function(){
+      worker.postMessage({action: 'skipWaiting'})
+    })
+
+    prompt.appendChild(updateBtn);
+    const dismissBtn = document.createElement('button');
+    dismissBtn.textContent = 'Dismiss';
+
+    // Dismiss prompt if user selects
+    dismissBtn.addEventListener('click', function() {
+      document.getElementById('prompt').remove();
+    })
+    prompt.appendChild(dismissBtn);
+    document.getElementById('maincontent').prepend(prompt);
+  }
+}
+
+/**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
-  initMap(); // added 
+  initMap(); // added
   fetchNeighborhoods();
   fetchCuisines();
 });
